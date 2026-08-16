@@ -1,6 +1,6 @@
 ---
 name: sove-skills
-description: Always-on collaboration rules and coding guidelines. MUST apply to every task before any action, remain active through completion, and work alongside all other skills.
+description: Always-on collaboration rules and coding guidelines. MUST apply before every task and remain active alongside all other skills.
 ---
 
 # Sove Skills - Universal AI Collaboration Standards
@@ -53,8 +53,9 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 ### 4. File Splitting Rules
 
 - Keep each file focused on a clear responsibility with well-defined boundaries.
-- Proactively split a file when it becomes excessively large, mixes independent concerns, or continues to grow without a clear boundary.
-- MUST NOT allow a single source file to grow to thousands or tens of thousands of lines.
+- Proactively split files created or materially changed by the current task when they become excessively large, mix independent concerns, or continue to grow without a clear boundary.
+- MUST NOT create or expand a single source file into thousands or tens of thousands of lines.
+- If an unrelated pre-existing file is already oversized, report it but do not refactor it unless the request requires that change.
 - Split by domain, responsibility, component, or feature while keeping public interfaces clear. Avoid circular dependencies and meaningless fragmentation.
 
 ### 5. Naming Rules
@@ -97,7 +98,7 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 
 ### 11. Plan Mode Rules
 
-- In Plan mode, omit execution of tests and verification. List only recommended verification points and the commands the developer should run manually.
+- In Plan mode, omit test and verification execution steps and commands. List only recommended verification points.
 - A plan MUST NOT instruct the AI to create test files or test cases, or to execute tests or verification commands.
 - The developer is solely responsible for performing the actual tests and verification.
 
