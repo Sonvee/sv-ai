@@ -1,11 +1,11 @@
 ---
 name: sove-skills
-description: Always-on collaboration rules and coding guidelines. MUST apply before every task and remain active alongside all other skills.
+description: Mandatory always-on collaboration, coding, testing, verification, and task-execution constraints. MUST be loaded before every task wherever this skill is available or referenced, and remain active alongside all other applicable skills.
 ---
 
-# Sove Skills - Universal AI Collaboration Standards
+# Sove Skills - Mandatory AI Collaboration Standards
 
-Apply these Rules and Guidelines regardless of the current agent, model, IDE, CLI, or hosting platform. Treat every requirement as mandatory unless it conflicts with a higher-priority platform, security, system, developer, user, or repository instruction.
+Once loaded, apply these Rules, Engineering Guidelines, and Task Execution Constraints regardless of the current agent, model, IDE, CLI, or hosting platform. Treat every requirement as mandatory unless it conflicts with a higher-priority platform, security, system, developer, user, or repository instruction.
 
 Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentional.
 
@@ -13,9 +13,9 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 
 ### Mandatory Activation
 
-1. This is an always-on skill. It MUST trigger for every new task and every user request, without exception.
+1. Wherever this skill is installed, listed, or referenced by repository or session instructions, it MUST be loaded for every new task and every user request.
 2. Load this skill before planning, reasoning, inspecting files, searching, editing, running commands, or writing a response.
-3. Keep every Rule and Guideline active throughout the full task, including follow-up requests, revisions, Plan mode, implementation, and the final response.
+3. Keep every Rule, Engineering Guideline, and Task Execution Constraint active throughout the full task, including follow-up requests, revisions, Plan mode, implementation, and the final response.
 4. Re-read this skill whenever work resumes after interruption, context compaction, handoff, or a long-running operation.
 5. Never omit or replace this skill because another specialized skill is active. Apply both.
 
@@ -46,7 +46,8 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 
 - Prefer the project's existing structure, framework conventions, toolchain, shared components, module organization, and code style.
 - Avoid reinventing existing functionality.
-- Before creating a utility function, wrapper, helper, or reusable abstraction, MUST first evaluate existing project implementations, installed dependencies, and suitable mainstream open-source solutions. MUST NOT handwrite such functionality without completing this evaluation.
+- Before creating a reusable utility, wrapper, helper, or abstraction, MUST first inspect existing project implementations and installed dependencies.
+- Evaluate suitable mainstream open-source solutions when the functionality is non-trivial, broadly reusable, security-sensitive, or would otherwise justify adding a dependency. Do not perform extensive external research for trivial, local, single-use logic.
 - Before adopting an existing or open-source solution, evaluate maintenance status, compatibility, security, license, bundle or runtime cost, and integration complexity. Do not add a dependency blindly for trivial functionality.
 - Organize code into focused, reusable components and modules. Extract only genuinely stable shared behavior; avoid unnecessary abstraction and over-engineering.
 
@@ -60,7 +61,7 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 
 ### 5. Naming Rules
 
-- File and directory names MUST NOT contain Chinese characters, to avoid cross-platform, toolchain, archive, deployment, and version-control compatibility issues.
+- New or renamed project-controlled files and directories MUST use English names to avoid cross-platform, toolchain, archive, deployment, and version-control compatibility issues. Preserve existing or user-provided paths unless renaming is explicitly requested or required for compatibility.
 - Follow the project's existing naming convention. When no convention exists, use clear English names and the casing style customary for the current ecosystem, such as kebab-case or snake_case.
 
 ### 6. Git Rules
@@ -81,15 +82,18 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 - Testing and verification MUST be precise, minimal, and proportional to the change. Start with the narrowest check that can provide meaningful confidence, such as the affected test case, test file, module, or targeted validation command.
 - TDD is permitted. When using TDD, create only the smallest test needed to demonstrate the requirement or reproduce the defect, then implement the change and rerun the focused test.
 - MUST NOT create redundant, duplicate, speculative, or unrelated tests. Avoid exhaustive edge-case matrices unless the system contract or identified risk requires them.
-- MUST NOT run broad, repeated, or expensive verification when a narrower check is sufficient. Expand from targeted checks to wider suites only when failures, shared infrastructure, regression risk, or repository requirements justify it.
-- If the same test still fails or produces no valid, useful result after three debugging-and-rerun attempts, the AI MUST immediately stop further testing and verification for that issue. It MUST NOT keep rerunning the test, add more tests, or broaden the verification scope. Notify the developer immediately with the test performed, the three attempts and observed results, the suspected blocker, and any decision or input required to continue.
+- MUST NOT run broad, repeated, or expensive verification when a narrower check is sufficient. A focused test failure alone does not justify broader verification. Before reaching the retry limit below, expand to wider checks only when shared infrastructure, regression risk, repository requirements, or evidence of a cross-component problem justifies it.
+- Treat the initial failed or inconclusive execution as the baseline. For the same failing test case, target behavior, or unchanged blocker, allow at most three materially different debugging-and-rerun cycles after that initial execution.
+- A debugging cycle requires a new hypothesis, a relevant code or configuration change, or a meaningful diagnostic action. Identical reruns without new evidence are redundant and MUST NOT be performed.
+- If the same test still fails or remains inconclusive after three debugging-and-rerun cycles, the AI MUST immediately stop further testing and verification for that issue. An inconclusive result is one that does not exercise the target behavior or is blocked by tooling or environment conditions. This stop rule overrides permission to broaden verification: the AI MUST NOT rerun the test, add tests, or widen the verification scope unless the developer explicitly authorizes a new approach after being notified. Notify the developer immediately with the test and command, the baseline result, all three attempts and observed results, the suspected blocker, and any decision or input required to continue.
 - Verification MUST respect the Service Lifecycle Rules and all external-action constraints. Do not start services or perform side-effecting setup merely to run a test without the required permission.
 - Report the exact checks executed and their outcomes. If a check was not run, was blocked, or failed, state that clearly and MUST NOT claim that the change passed it.
 
 ### 9. Service Lifecycle Rules
 
 - Without explicit user permission, the AI MUST NOT start, restart, stop, terminate, or relaunch any development, test, database, container, or background service.
-- If a required service is not running, tell the developer which command to run manually. Do not start it on the developer's behalf.
+- This restriction applies to persistent, background, or independently managed services. Short-lived subprocesses automatically started and terminated by a focused test command are permitted only when they remain scoped to that command and leave no running service or persistent external state.
+- If a required persistent or independently managed service is not running, tell the developer which command to run manually. Do not start it on the developer's behalf.
 - If the service is already running, do not start a duplicate or redundant instance.
 - Do not assume that a service can be operated safely when its current state is unknown.
 
@@ -105,9 +109,9 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 - If another skill conflicts with this skill, follow this skill's mandatory constraints unless doing so would violate a higher-priority instruction.
 - If a rule cannot be followed, do not skip it silently. Explain the conflict or limitation and choose the safest compliant approach.
 
-## Guidelines
+## Engineering Guidelines
 
-These behavioral guidelines reduce common coding mistakes. They apply when writing, reviewing, debugging, or refactoring code and MUST be followed together with all Rules.
+These mandatory engineering guidelines reduce common coding mistakes. They apply when writing, reviewing, debugging, or refactoring code and MUST be followed together with all Rules and Task Execution Constraints.
 
 ### 1. Think Before Coding
 
@@ -139,14 +143,14 @@ These behavioral guidelines reduce common coding mistakes. They apply when writi
 ### 4. Goal-Driven Execution
 
 - Before implementation, translate the request into concrete, observable success criteria.
-- For a multi-step task, state a brief plan in this form: `[action] -> developer verifies: [observable result]`.
+- For a multi-step task, state a brief plan in this form: `[action] -> verify: [observable result]`.
 - Define success by externally observable behavior, preserved contracts, expected outputs, or clearly inspectable changes rather than vague goals such as "make it work".
 - Examples:
   - Validation change -> define accepted inputs, rejected inputs, and expected error behavior.
   - Bug fix -> identify reproducible current behavior and the expected corrected behavior.
   - Refactor -> identify the behavior and public interfaces that MUST remain unchanged.
-- Review the implementation against the success criteria before completion. If the developer reports a failed verification point, use that result to revise the implementation and repeat the review.
-- Apply the Testing and Verification Rules when selecting checks: use the smallest sufficient verification set, expand only when justified by risk or failure, and report every executed, skipped, blocked, or failed check accurately.
+- Review the implementation against the success criteria before completion. If any verification point fails, whether discovered by the AI or reported by the developer, use that result to revise the implementation and repeat the review.
+- Apply the Testing and Verification Rules when selecting checks: use the smallest sufficient verification set, expand only when justified by evidence, shared infrastructure, regression risk, or repository requirements, and report every executed, skipped, blocked, or failed check accurately.
 
 ## Task Execution Constraints
 
@@ -173,6 +177,8 @@ If any precondition is not satisfied, use Inline Execution or perform the work s
 
 ### Work Suitable for Parallel Subagents
 
+The following are typical suitable cases, not an exhaustive list. Any additional case MUST satisfy all Safe Subagent Preconditions.
+
 - **Code inspection:** Split investigation by independent module, component, layer, or issue, with separately checkable findings.
 - **Test execution:** Run independent test cases or suites only when they do not compete for or mutate shared state and their results can be evaluated separately.
 - **Log analysis:** Assign separate logs, time ranges, services, or failure traces so each subagent can identify causes independently.
@@ -189,8 +195,8 @@ If any precondition is not satisfied, use Inline Execution or perform the work s
 
 - Give every subagent only the context required for its single assigned task, together with its scope, constraints, deliverable, and completion criteria.
 - While subagents are running, the main agent MAY continue only non-overlapping work and MUST NOT duplicate their assigned tasks.
-- Wait until all dispatched subagents have completed or reached a terminal state before performing cross-result deduplication, reconciliation, summarization, merging, or final integration.
-- After all results are available, the main agent MUST check each result against its assigned scope, remove duplication, resolve contradictions, consolidate the outputs, and verify the integrated result.
+- Wait until all dispatched subagents have completed, failed, been cancelled, or been explicitly closed before performing cross-result deduplication, reconciliation, summarization, merging, or final integration.
+- Once every dispatched subagent is in one of those terminal states, the main agent MUST account for missing or failed results, check each available result against its assigned scope, remove duplication, resolve contradictions, consolidate the outputs, and verify the integrated result.
 
 ### Git Worktree Prohibition
 
