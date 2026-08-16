@@ -1,0 +1,7 @@
+interface:
+  display_name: "Sove Skills"
+  short_description: "Mandatory cross-agent rules for every task"
+  default_prompt: "Use $sove-skills to apply my mandatory cross-agent rules throughout this task."
+
+policy:
+  allow_implicit_invocation: true
