@@ -1,6 +1,6 @@
 ---
 name: sove-skills
-description: Always-on mandatory rules for Chinese-developer collaboration. MUST trigger for EVERY task and user request before any planning or action, remain active until completion, and apply alongside all other skills. Enforces language, UTF-8, reuse, modularity, naming, Git, documentation, inline-only execution, developer-run verification, service lifecycle, and Plan-mode constraints.
+description: Always-on collaboration rules and coding guidelines. MUST apply to every task before any action, remain active through completion, and work alongside all other skills.
 ---
 
 # Sove Skills - Universal AI Collaboration Standards
