@@ -34,7 +34,7 @@ Rules:
 - `<page-name>` MUST use kebab-case.
 - MUST NOT create a page as a direct single file under `src/views`, such as `src/views/home.vue`.
 - If the developer provides only a page name, infer the kebab-case directory name and create the required directory structure automatically.
-- Keep page-specific files in the same page directory, such as `index.ts`, `types.ts`, `style.scss`, and `__tests__/`.
+- Keep required page-specific files in the same page directory, such as `index.ts`, `types.ts`, `style.scss`, and `__tests__/`. Do not create optional companion files unless the task needs them.
 
 Examples:
 
@@ -56,7 +56,7 @@ Rules:
 - `<ComponentName>` MUST use PascalCase.
 - MUST NOT create a global component as a direct single file under `src/components`, such as `src/components/HelloWorld.vue`.
 - If the developer provides only a component name, infer the PascalCase name and create the required directory structure automatically.
-- Keep component-specific files in the same component directory, such as `index.ts`, `types.ts`, `style.scss`, and `__tests__/`.
+- Keep required component-specific files in the same component directory, such as `index.ts`, `types.ts`, `style.scss`, and `__tests__/`. Do not create optional companion files unless the task needs them.
 
 Example:
 

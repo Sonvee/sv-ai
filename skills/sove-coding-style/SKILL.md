@@ -1,13 +1,13 @@
 ---
 name: sove-coding-style
-description: Personal coding-style rules for Vue, frontend UI, JavaScript, and TypeScript. Use whenever writing, reviewing, debugging, or refactoring related code; load all applicable reference files before making changes.
+description: MUST use for Vue, frontend UI, JavaScript, or TypeScript implementation, review, debugging, and refactoring. Load every applicable coding-style reference before action.
 ---
 
 # Sove Coding Style
 
 Apply the developer's personal coding-style requirements to relevant implementation, review, debugging, and refactoring tasks.
 
-This skill defines style preferences. It MUST be used alongside `sove-skills`, repository instructions, and all applicable framework or language skills. It does not replace technical correctness, framework guidance, or project-specific conventions.
+This skill defines mandatory personal style requirements. It MUST be used alongside `sove-skills`, repository instructions, and all applicable framework or language skills. It does not replace technical correctness or framework guidance. These explicit personal requirements override general project style preferences when both can be applied safely; higher-priority instructions still take precedence.
 
 ## Reference Loading
 
@@ -22,8 +22,9 @@ A task can require multiple references. For example, a Vue component written in 
 
 ## Application Rules
 
-1. Load the applicable references before planning or changing related code.
+1. Load the applicable references before planning, reviewing, or changing related code.
 2. Apply all relevant style requirements together rather than selecting only convenient rules.
-3. When a reference is empty or does not define the required style, do not invent a personal preference. Follow the existing project conventions and applicable specialized skills.
-4. If style requirements conflict, follow the higher-priority instruction hierarchy. When requirements have equal priority, prefer the more specific technology reference over the more general reference.
-5. Keep technology-specific details in their reference files. Do not expand `SKILL.md` with Vue, UI, JavaScript, or TypeScript style rules.
+3. Apply these requirements to new and modified code. Do not reformat or refactor unaffected existing code solely to make it conform.
+4. When a reference does not define the required style, do not invent a personal preference. Follow the existing project conventions and applicable specialized skills.
+5. If requirements conflict, follow the higher-priority instruction hierarchy. Among requirements at the same priority, prefer the more specific technology rule over the general rule and the explicit rule in this skill over an inferred convention.
+6. Keep technology-specific details in their reference files. Do not expand `SKILL.md` with Vue, UI, JavaScript, or TypeScript style rules.
