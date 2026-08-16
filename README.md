@@ -2,6 +2,12 @@
 
 `sv-ai` 是一组面向 AI 编程协作的个人 Agent Skills，适用于 Codex、Claude Code、Cursor 及其他兼容 `SKILL.md` 格式的工具。
 
+## 安装全部 Skills
+
+```bash
+npx skills add Sonvee/sv-ai -g
+```
+
 ## Skills
 
 ### sove-skills
