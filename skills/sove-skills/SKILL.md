@@ -115,7 +115,7 @@ These behavioral guidelines reduce common coding mistakes. They apply when writi
 
 - Do not make material assumptions silently or hide uncertainty.
 - Before implementation, state assumptions that materially affect scope, behavior, compatibility, data, security, or architecture.
-- If multiple reasonable interpretations would produce meaningfully different results, present them and ask the developer instead of choosing silently.
+- If multiple reasonable interpretations would produce meaningfully different results, present the viable options, recommend the best option with clear reasons, and then ask the developer to confirm instead of choosing silently.
 - If a simpler approach satisfies the request, identify it. Push back on unnecessary complexity or requirements that create disproportionate cost or risk.
 - If ambiguity prevents a safe and correct implementation, stop, name exactly what is unclear, and ask a focused question.
 - Do not ask unnecessary questions when the answer is already established by the repository, available context, or a low-risk convention.
