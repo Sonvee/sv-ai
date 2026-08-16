@@ -75,38 +75,84 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 - Include only the smallest code snippet necessary to explain a core design or critical usage pattern. Do not copy large blocks of production code into documentation as filler.
 - Split long documentation by topic and provide clear navigation. MUST NOT create a single excessively long document containing multiple independent subjects.
 
-### 8. Task Execution Rules
+### 8. Testing and Verification Rules
 
-- Use Inline Execution only.
-- MUST NOT use a Subagent-Driven workflow and MUST NOT create, invoke, or delegate work to subagents.
-- MUST NOT create or use a Git worktree. Perform all permitted work in the current working tree.
+- The AI MAY create or modify focused tests and MAY run tests, builds, type checks, linters, format checks, end-to-end tests, and validation scripts when they are relevant to the requested change.
+- Testing and verification MUST be precise, minimal, and proportional to the change. Start with the narrowest check that can provide meaningful confidence, such as the affected test case, test file, module, or targeted validation command.
+- TDD is permitted. When using TDD, create only the smallest test needed to demonstrate the requirement or reproduce the defect, then implement the change and rerun the focused test.
+- MUST NOT create redundant, duplicate, speculative, or unrelated tests. Avoid exhaustive edge-case matrices unless the system contract or identified risk requires them.
+- MUST NOT run broad, repeated, or expensive verification when a narrower check is sufficient. Expand from targeted checks to wider suites only when failures, shared infrastructure, regression risk, or repository requirements justify it.
+- If the same test still fails or produces no valid, useful result after three debugging-and-rerun attempts, the AI MUST immediately stop further testing and verification for that issue. It MUST NOT keep rerunning the test, add more tests, or broaden the verification scope. Notify the developer immediately with the test performed, the three attempts and observed results, the suspected blocker, and any decision or input required to continue.
+- Verification MUST respect the Service Lifecycle Rules and all external-action constraints. Do not start services or perform side-effecting setup merely to run a test without the required permission.
+- Report the exact checks executed and their outcomes. If a check was not run, was blocked, or failed, state that clearly and MUST NOT claim that the change passed it.
 
-### 9. Testing and Verification Rules
-
-- The AI MUST NOT create test files, test cases, test data, test fixtures, or test scripts.
-- All testing and verification MUST be performed manually by the developer.
-- The AI MUST NOT run tests, builds, type checks, linters, format checks, end-to-end tests, validation scripts, or any other verification command.
-- After completing code or configuration changes, provide manual verification guidance containing the recommended verification points, prerequisites, commands, and steps the developer should execute.
-- Until the developer reports the verification result, do not claim that the change has passed tests or validation. State only that the requested modifications are complete and awaiting developer verification.
-
-### 10. Service Lifecycle Rules
+### 9. Service Lifecycle Rules
 
 - Without explicit user permission, the AI MUST NOT start, restart, stop, terminate, or relaunch any development, test, database, container, or background service.
 - If a required service is not running, tell the developer which command to run manually. Do not start it on the developer's behalf.
 - If the service is already running, do not start a duplicate or redundant instance.
 - Do not assume that a service can be operated safely when its current state is unknown.
 
-### 11. Plan Mode Rules
+### 10. Plan Mode Rules
 
-- In Plan mode, omit test and verification execution steps and commands. List only recommended verification points.
-- A plan MUST NOT instruct the AI to create test files or test cases, or to execute tests or verification commands.
-- The developer is solely responsible for performing the actual tests and verification.
+- In Plan mode, include only the focused tests and verification steps that are necessary and proportional to the requested change.
+- Plans MAY use TDD and MAY include creating or running targeted tests when that workflow improves correctness or clarifies the acceptance criteria.
+- Do not default to a full test suite, broad build matrix, or repeated verification. State the minimum sufficient checks and the reason for any wider validation.
 
 ### Conflict Handling
 
 - Follow higher-priority instructions from the active platform and instruction hierarchy.
 - If another skill conflicts with this skill, follow this skill's mandatory constraints unless doing so would violate a higher-priority instruction.
 - If a rule cannot be followed, do not skip it silently. Explain the conflict or limitation and choose the safest compliant approach.
+
+## Task Execution Guidelines
+
+Choose the simplest execution mode that safely completes the task. Use Inline Execution by default for simple or tightly coupled work. Use subagents only for clearly scoped, genuinely independent work that can run in parallel without interference.
+
+### Inline Execution
+
+- Use Inline Execution for simple tasks that can be completed directly with little coordination overhead.
+- Keep work inline when the next step depends on the immediately preceding result, when decisions must be made sequentially, or when the work touches shared files or mutable state.
+- Keep work inline while requirements, scope, ownership, or acceptance criteria remain unclear. Clarify them before considering delegation.
+
+### Safe Subagent Preconditions
+
+Use subagents only when every condition below is satisfied:
+
+1. The requirement, scope, expected output, and completion criteria are explicit.
+2. Each subagent owns exactly one focused task and has a clearly defined responsibility.
+3. The delegated tasks are mutually independent and do not depend on another subagent's unfinished reasoning or result.
+4. The tasks do not modify the same files, resources, services, or mutable state. Any delegated write scopes MUST be disjoint.
+5. Each result can be inspected and accepted independently.
+6. Subagents do not need to coordinate with, supervise, or hand work directly to one another.
+
+If any precondition is not satisfied, use Inline Execution or perform the work serially instead.
+
+### Work Suitable for Parallel Subagents
+
+- **Code inspection:** Split investigation by independent module, component, layer, or issue, with separately checkable findings.
+- **Test execution:** Run independent test cases or suites only when they do not compete for or mutate shared state and their results can be evaluated separately.
+- **Log analysis:** Assign separate logs, time ranges, services, or failure traces so each subagent can identify causes independently.
+- **Independent reviews:** Separate security, quality, performance, or regression checks when each review has a distinct scope and output.
+
+### Work Unsuitable for Parallel Subagents
+
+- Multiple tasks that may edit the same file or overlapping code, because conflicts and merge risk outweigh parallelism.
+- Sequential decisions where a later action depends on an earlier judgment, experiment, or result.
+- External or side-effecting actions such as publishing, deleting, sending, deploying, or changing permissions.
+- Tasks whose requirements, boundaries, ownership, or acceptance criteria are not yet clear.
+
+### Subagent Completion and Integration
+
+- Give every subagent only the context required for its single assigned task, together with its scope, constraints, deliverable, and completion criteria.
+- While subagents are running, the main agent MAY continue only non-overlapping work and MUST NOT duplicate their assigned tasks.
+- Wait until all dispatched subagents have completed or reached a terminal state before performing cross-result deduplication, reconciliation, summarization, merging, or final integration.
+- After all results are available, the main agent MUST check each result against its assigned scope, remove duplication, resolve contradictions, consolidate the outputs, and verify the integrated result.
+
+### Git Worktree Prohibition
+
+- MUST NOT create, request, or use a Git worktree to isolate, coordinate, or manage subagent work.
+- If safe subagent execution would require Git worktrees or overlapping write scopes, do not delegate that work; use Inline Execution or serialize it in the existing workspace instead.
 
 ## Guidelines
 
@@ -149,4 +195,4 @@ These behavioral guidelines reduce common coding mistakes. They apply when writi
   - Bug fix -> identify reproducible current behavior and the expected corrected behavior.
   - Refactor -> identify the behavior and public interfaces that MUST remain unchanged.
 - Review the implementation against the success criteria before completion. If the developer reports a failed verification point, use that result to revise the implementation and repeat the review.
-- These Guidelines do not override the Testing and Verification Rules: the AI MUST NOT create or run tests or verification commands. Provide the criteria, checks, and commands for the developer to execute manually, and do not claim success before the developer reports the result.
+- Apply the Testing and Verification Rules when selecting checks: use the smallest sufficient verification set, expand only when justified by risk or failure, and report every executed, skipped, blocked, or failed check accurately.
