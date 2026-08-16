@@ -23,7 +23,7 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 2. Inspect only the context needed to understand the current implementation, project conventions, and impact. Do not guess facts that can be established from local files, available tools, or authoritative sources.
 3. Make the smallest coherent change that fully satisfies the request. Avoid unrelated refactors, formatting churn, generated artifacts, and unrequested features.
 4. Do not overwrite, revert, or rewrite unrelated work created by the user or other developers. Stop the affected change and report any conflict that cannot be handled safely.
-5. Follow the active instruction hierarchy and every applicable repository instruction file, including `AGENTS.md`, `CLAUDE.md`, and `.github/copilot-instructions.md`.
+5. Follow the active instruction hierarchy and every applicable repository instruction file, including `AGENTS.md` and `CLAUDE.md`.
 6. Use only capabilities and tools that are actually available in the current environment. Never fabricate actions, outputs, verification results, or tool access.
 
 ## 1. Language Rules

@@ -1,6 +1,6 @@
 # sove-skills
 
-我的个人跨平台 Agent Skills 仓库，面向 Codex、Claude Code、GitHub Copilot、Cursor 及其他兼容 `SKILL.md` 的 AI 编程代理。
+我的个人跨平台 Agent Skills 仓库，面向 Codex、Claude Code、Cursor 及其他兼容 `SKILL.md` 的 AI 编程代理。
 
 ## 目录结构
 
@@ -35,7 +35,6 @@ skills/
 | --- | --- | --- | --- |
 | Codex | `.agents/skills/sove-skills` | `~/.agents/skills/sove-skills` | `AGENTS.md` |
 | Claude Code | `.claude/skills/sove-skills` | `~/.claude/skills/sove-skills` | `CLAUDE.md` |
-| GitHub Copilot | `.github/skills/sove-skills` | 取决于 Copilot 客户端 | `.github/copilot-instructions.md` |
 | Cursor | `.cursor/skills/sove-skills` 或 `.agents/skills/sove-skills` | `~/.cursor/skills/sove-skills` | Cursor Rules 或 `AGENTS.md` |
 
 其他支持 Agent Skills 开放格式的工具，只需把该目录放进其 Skill 搜索路径。若工具按需加载 Skill，而你希望规则始终生效，还应在该工具的项目级持久指令文件中明确要求每个任务先读取 `sove-skills/SKILL.md`。
@@ -46,4 +45,3 @@ skills/
 
 - `AGENTS.md`：Codex、Cursor 及其他识别该约定的代理。
 - `CLAUDE.md`：Claude Code。
-- `.github/copilot-instructions.md`：GitHub Copilot。
