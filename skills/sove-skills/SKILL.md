@@ -105,7 +105,50 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 - If another skill conflicts with this skill, follow this skill's mandatory constraints unless doing so would violate a higher-priority instruction.
 - If a rule cannot be followed, do not skip it silently. Explain the conflict or limitation and choose the safest compliant approach.
 
-## Task Execution Guidelines
+## Guidelines
+
+These behavioral guidelines reduce common coding mistakes. They apply when writing, reviewing, debugging, or refactoring code and MUST be followed together with all Rules.
+
+### 1. Think Before Coding
+
+- Do not make material assumptions silently or hide uncertainty.
+- Before implementation, state assumptions that materially affect scope, behavior, compatibility, data, security, or architecture.
+- If multiple reasonable interpretations would produce meaningfully different results, present the viable options, recommend the best option with clear reasons, and then ask the developer to confirm instead of choosing silently.
+- If a simpler approach satisfies the request, identify it. Push back on unnecessary complexity or requirements that create disproportionate cost or risk.
+- If ambiguity prevents a safe and correct implementation, stop, name exactly what is unclear, and ask a focused question.
+- Do not ask unnecessary questions when the answer is already established by the repository, available context, or a low-risk convention.
+
+### 2. Simplicity First
+
+- Implement the minimum coherent solution that fully satisfies the request. Add nothing speculative.
+- MUST NOT add features, extensibility, configurability, fallback behavior, or abstractions that were not requested or required by the existing architecture.
+- Avoid abstractions for single-use code unless the project already requires that pattern or the abstraction removes real duplication.
+- Do not add handling for impossible states. Do handle realistically reachable failures required by the current system contract.
+- If the implementation is substantially longer or more complex than necessary, simplify it before completion.
+- Ask: "Would an experienced maintainer consider this overcomplicated for the stated requirement?" If yes, reduce it.
+
+### 3. Surgical Changes
+
+- Change only what is necessary to satisfy the request. Every changed line SHOULD trace directly to the requested outcome or to a necessary consequence of that change.
+- MUST NOT improve, reformat, rename, reorganize, or refactor adjacent code unless required for the requested change.
+- Match the existing local style and conventions even when another style would also be valid.
+- If unrelated dead code or defects are discovered, mention them separately. Do not modify or remove them unless asked.
+- Remove imports, variables, functions, files, and other artifacts made unused specifically by the current change.
+- Do not remove pre-existing unused code or unrelated artifacts unless the developer explicitly requests it.
+
+### 4. Goal-Driven Execution
+
+- Before implementation, translate the request into concrete, observable success criteria.
+- For a multi-step task, state a brief plan in this form: `[action] -> developer verifies: [observable result]`.
+- Define success by externally observable behavior, preserved contracts, expected outputs, or clearly inspectable changes rather than vague goals such as "make it work".
+- Examples:
+  - Validation change -> define accepted inputs, rejected inputs, and expected error behavior.
+  - Bug fix -> identify reproducible current behavior and the expected corrected behavior.
+  - Refactor -> identify the behavior and public interfaces that MUST remain unchanged.
+- Review the implementation against the success criteria before completion. If the developer reports a failed verification point, use that result to revise the implementation and repeat the review.
+- Apply the Testing and Verification Rules when selecting checks: use the smallest sufficient verification set, expand only when justified by risk or failure, and report every executed, skipped, blocked, or failed check accurately.
+
+## Task Execution Constraints
 
 Choose the simplest execution mode that safely completes the task. Use Inline Execution by default for simple or tightly coupled work. Use subagents only for clearly scoped, genuinely independent work that can run in parallel without interference.
 
@@ -153,46 +196,3 @@ If any precondition is not satisfied, use Inline Execution or perform the work s
 
 - MUST NOT create, request, or use a Git worktree to isolate, coordinate, or manage subagent work.
 - If safe subagent execution would require Git worktrees or overlapping write scopes, do not delegate that work; use Inline Execution or serialize it in the existing workspace instead.
-
-## Guidelines
-
-These behavioral guidelines reduce common coding mistakes. They apply when writing, reviewing, debugging, or refactoring code and MUST be followed together with all Rules.
-
-### 1. Think Before Coding
-
-- Do not make material assumptions silently or hide uncertainty.
-- Before implementation, state assumptions that materially affect scope, behavior, compatibility, data, security, or architecture.
-- If multiple reasonable interpretations would produce meaningfully different results, present the viable options, recommend the best option with clear reasons, and then ask the developer to confirm instead of choosing silently.
-- If a simpler approach satisfies the request, identify it. Push back on unnecessary complexity or requirements that create disproportionate cost or risk.
-- If ambiguity prevents a safe and correct implementation, stop, name exactly what is unclear, and ask a focused question.
-- Do not ask unnecessary questions when the answer is already established by the repository, available context, or a low-risk convention.
-
-### 2. Simplicity First
-
-- Implement the minimum coherent solution that fully satisfies the request. Add nothing speculative.
-- MUST NOT add features, extensibility, configurability, fallback behavior, or abstractions that were not requested or required by the existing architecture.
-- Avoid abstractions for single-use code unless the project already requires that pattern or the abstraction removes real duplication.
-- Do not add handling for impossible states. Do handle realistically reachable failures required by the current system contract.
-- If the implementation is substantially longer or more complex than necessary, simplify it before completion.
-- Ask: "Would an experienced maintainer consider this overcomplicated for the stated requirement?" If yes, reduce it.
-
-### 3. Surgical Changes
-
-- Change only what is necessary to satisfy the request. Every changed line SHOULD trace directly to the requested outcome or to a necessary consequence of that change.
-- MUST NOT improve, reformat, rename, reorganize, or refactor adjacent code unless required for the requested change.
-- Match the existing local style and conventions even when another style would also be valid.
-- If unrelated dead code or defects are discovered, mention them separately. Do not modify or remove them unless asked.
-- Remove imports, variables, functions, files, and other artifacts made unused specifically by the current change.
-- Do not remove pre-existing unused code or unrelated artifacts unless the developer explicitly requests it.
-
-### 4. Goal-Driven Execution
-
-- Before implementation, translate the request into concrete, observable success criteria.
-- For a multi-step task, state a brief plan in this form: `[action] -> developer verifies: [observable result]`.
-- Define success by externally observable behavior, preserved contracts, expected outputs, or clearly inspectable changes rather than vague goals such as "make it work".
-- Examples:
-  - Validation change -> define accepted inputs, rejected inputs, and expected error behavior.
-  - Bug fix -> identify reproducible current behavior and the expected corrected behavior.
-  - Refactor -> identify the behavior and public interfaces that MUST remain unchanged.
-- Review the implementation against the success criteria before completion. If the developer reports a failed verification point, use that result to revise the implementation and repeat the review.
-- Apply the Testing and Verification Rules when selecting checks: use the smallest sufficient verification set, expand only when justified by risk or failure, and report every executed, skipped, blocked, or failed check accurately.
