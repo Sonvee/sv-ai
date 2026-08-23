@@ -1,0 +1,7 @@
+interface:
+  display_name: "Sove Blog Writer"
+  short_description: "先对齐定位与读者，再按 Sove 风格撰写技术博客"
+  default_prompt: "Use $sove-blog-writer to clarify the positioning, audience, scope, and emphasis before drafting a Chinese technical blog in Sove's personal style."
+
+policy:
+  allow_implicit_invocation: true
