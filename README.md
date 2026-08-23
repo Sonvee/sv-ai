@@ -33,3 +33,21 @@ npx skills add Sonvee/sv-ai --skill sove-skills -g
 ```bash
 npx skills add Sonvee/sv-ai --skill sove-coding-style -g
 ```
+
+### sove-blog-writer
+
+按 Sove 个人写作风格规划、撰写和修改中文技术博客。该 Skill 不追求把相关知识写得大而全，而是先明确文章定位、目标读者、内容边界和重点，再围绕读者最需要掌握的主线决定哪些内容详写、略写或删除。
+
+开始写正文前，Skill 会先整理需求并输出文章简报，等待用户确认后再动笔。成文时会根据文章类型和读者基础调整结构与措辞，并确保整篇博客只有一个一级标题。
+
+该 Skill 只能由用户显式指定触发，不会自动调用：
+
+```text
+$sove-blog-writer
+```
+
+完整规范见 [`skills/sove-blog-writer/SKILL.md`](skills/sove-blog-writer/SKILL.md)。写作风格基线保存在 Skill 内部，不依赖外部博客文章的固定链接。
+
+```bash
+npx skills add Sonvee/sv-ai --skill sove-blog-writer -g
+```
