@@ -4,4 +4,4 @@ interface:
   default_prompt: "Use $sove-blog-writer to clarify the positioning, audience, scope, and emphasis before drafting a Chinese technical blog in Sove's personal style."
 
 policy:
-  allow_implicit_invocation: true
+  allow_implicit_invocation: false
