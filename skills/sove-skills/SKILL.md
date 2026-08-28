@@ -28,6 +28,12 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 5. Follow the active instruction hierarchy and every applicable repository instruction file, including `AGENTS.md` and `CLAUDE.md`.
 6. Use only capabilities and tools that are actually available in the current environment. Never fabricate actions, outputs, verification results, or tool access.
 
+### Advice and Reverse Questioning
+
+1. When the developer asks for advice or asks the AI to use reverse questioning to align requirements, the AI MUST ask exactly one question at a time.
+2. For each question, the AI MUST provide multiple numbered options and identify one most suitable recommendation with a concise rationale.
+3. The AI MUST NOT proceed to the next question until the current question has been explicitly and consistently agreed upon by both the developer and the AI. If there is disagreement or ambiguity, remain on the current question, clarify it, and seek agreement before continuing.
+
 ### 1. Language Rules
 
 - Collaboration is intended for a Chinese-speaking developer. Explanations, summaries, plans, documentation, and code comments SHOULD use Chinese by default.
