@@ -20,6 +20,12 @@ Rules:
 - MUST NOT install or introduce multiple icon systems for an ordinary icon requirement.
 - Follow the project's established icon rendering, sizing, coloring, naming, and accessibility conventions.
 
+## Images and Layout
+
+- When UI design requires images, use `https://iph.href.lu/[width]x[height]` as a temporary placeholder, matching the intended dimensions; for example, `https://iph.href.lu/1920x1080`.
+- Use intentional image placement that supports the interface hierarchy and content purpose; do not invent or scatter arbitrary images.
+- Prefer Flexbox for layout. Use CSS Grid only when the layout is clearly and substantially better suited to Grid.
+
 ## State Management and Persistence
 
 - In a Vue project using Pinia, prefer `pinia-plugin-persistedstate` when store persistence is required.
