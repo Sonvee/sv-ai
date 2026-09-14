@@ -95,7 +95,21 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 - Verification MUST respect the Service Lifecycle Rules and all external-action constraints. Do not start services or perform side-effecting setup merely to run a test without the required permission.
 - Report the exact checks executed and their outcomes. If a check was not run, was blocked, or failed, state that clearly and MUST NOT claim that the change passed it.
 
-### 9. Service Lifecycle Rules
+### 9. Toolchain Invocation Failure and Stop Rules
+
+- Tool calls MUST be treated as bounded operations. If a system or toolchain call fails because of insufficient permissions, a missing or broken tool, an invalid executable, an unavailable service, a network or connectivity problem, an environment or configuration failure, or another external blocker, the AI MUST assess whether the failure is transient and whether a retry has a concrete chance of changing the outcome.
+- The AI MUST NOT repeat the same failed call, make superficial syntax variations, or switch tools or channels merely to continue when there is no new evidence and no relevant condition has changed.
+- When a failure clearly indicates a persistent environment blocker, the AI MUST stop tool invocation immediately and report to the developer:
+  - the failed tool and command or request;
+  - the exact error message or observed failure;
+  - whether the operation executed, partially executed, or did not start;
+  - why further retries are unlikely to help;
+  - the concrete user action, permission, or environment change required to continue.
+- A different diagnostic or fallback is allowed only when it is materially different, relevant, safe, and reasonably likely to resolve the blocker. If that attempt fails or the evidence remains unchanged, the AI MUST stop and report instead of entering a retry loop.
+- If a tool call is inconclusive, hangs, repeatedly times out, or leaves the session unable to make progress, the AI MUST stop after the bounded attempt and report the blocker. The AI MUST NOT keep the session stuck in unproductive tool calls.
+- This rule applies to all system tools, MCP servers, shell commands, tests, builds, network actions, and service interactions. For toolchain or environment failures, it takes precedence over any general inclination to retry; it does not prevent focused debugging cycles when the tool executes normally and the target behavior is actually exercised.
+
+### 10. Service Lifecycle Rules
 
 - Without explicit user permission, the AI MUST NOT start, restart, stop, terminate, or relaunch any development, test, database, container, or background service.
 - This restriction applies to persistent, background, or independently managed services. Short-lived subprocesses automatically started and terminated by a focused test command are permitted only when they remain scoped to that command and leave no running service or persistent external state.
@@ -103,7 +117,7 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 - If the service is already running, do not start a duplicate or redundant instance.
 - Do not assume that a service can be operated safely when its current state is unknown.
 
-### 10. Plan Mode Rules
+### 11. Plan Mode Rules
 
 - In Plan mode, include only the focused tests and verification steps that are necessary and proportional to the requested change.
 - Plans MAY use TDD and MAY include creating or running targeted tests when that workflow improves correctness or clarifies the acceptance criteria.
