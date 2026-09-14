@@ -34,6 +34,32 @@ npx skills add Sonvee/sv-ai --skill sove-skills -g
 npx skills add Sonvee/sv-ai --skill sove-coding-style -g
 ```
 
+### code-with-docs
+
+文档优先的开发协作流程，用于在正式编程前完成需求对齐、产品需求文档（PRD）和开发计划。该 Skill 会围绕目标、范围、交互、数据、验收标准、技术选型和代码复用策略进行逐项确认，避免 AI 带着关键疑问进入实现阶段。
+
+该 Skill **只能由用户显式指定触发**，不会自动调用：
+
+```text
+$code-with-docs
+```
+
+使用流程如下：
+
+1. 检查项目上下文和已有文档；
+2. 通过一次一个问题的方式完成需求确认，并将每个确认结论增量写入 `docs/prd/`；
+3. 基于已确认的 PRD 检查现有代码和依赖，完成技术选型、复用策略和实施设计；
+4. 将开发计划写入 `docs/plans/`，并明确改动边界、实施步骤和验证方式；
+5. 文档前置工作完成后通知用户已就绪，等待后续明确的开发授权，未获得授权前不会修改业务代码。
+
+需求文档和计划文档支持按主题拆分，并使用带前置序号的小写英文短横线命名，例如 `01-user-auth.md`、`02-order-flow-01.md`。前置序号按对应目录中的最大序号递增，PRD 与 plans 分别独立编号。
+
+完整规范见 [`skills/code-with-docs/SKILL.md`](skills/code-with-docs/SKILL.md)。
+
+```bash
+npx skills add Sonvee/sv-ai --skill code-with-docs -g
+```
+
 ### sove-blog-writer
 
 按 Sove 个人写作风格规划、撰写和修改中文技术博客。该 Skill 不追求把相关知识写得大而全，而是先明确文章定位、目标读者、内容边界和重点，再围绕读者最需要掌握的主线决定哪些内容详写、略写或删除。
