@@ -1,0 +1,7 @@
+interface:
+  display_name: Code With Docs
+  short_description: Clarify requirements and develop from approved documentation
+  default_prompt: Use $code-with-docs to clarify requirements, create development documentation, confirm it, and implement from the approved documentation.
+
+policy:
+  allow_implicit_invocation: false
