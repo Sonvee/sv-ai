@@ -27,6 +27,7 @@ Normative keywords such as MUST, MUST NOT, SHOULD, and SHOULD NOT are intentiona
 4. Do not overwrite, revert, or rewrite unrelated work created by the user or other developers. Stop the affected change and report any conflict that cannot be handled safely.
 5. Follow the active instruction hierarchy and every applicable repository instruction file, including `AGENTS.md` and `CLAUDE.md`.
 6. Use only capabilities and tools that are actually available in the current environment. Never fabricate actions, outputs, verification results, or tool access.
+7. If a sentence in a response serves to defend yourself or preempt criticism, do not say it.
 
 ### Advice and Reverse Questioning
 
