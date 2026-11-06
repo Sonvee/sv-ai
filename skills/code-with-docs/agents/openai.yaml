@@ -1,7 +1,7 @@
 interface:
-  display_name: Code With Docs
-  short_description: Clarify requirements and develop from approved documentation
-  default_prompt: Use $code-with-docs to clarify requirements, create development documentation, confirm it, and implement from the approved documentation.
+  display_name: "Code With Docs"
+  short_description: "Prepare PRD, optional ADRs, and Spec with implementation tasks"
+  default_prompt: "Use $code-with-docs to clarify requirements, prepare and confirm a PRD, any necessary ADRs, and a Spec with implementation tasks, then wait for a later explicit instruction to begin implementation."
 
 policy:
   allow_implicit_invocation: false
